@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main1 {
+	public static void printTa(QueryImages query1,Scanner scan) {
+		
+	}
 
-
-
+//bye
 	public static void printTags(QueryImages query1,Scanner scan) {
 
 		String input;
