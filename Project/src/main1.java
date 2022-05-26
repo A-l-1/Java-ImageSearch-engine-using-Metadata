@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class main1 {
 
-	
+
 	public static void printTags(QueryImages query1,Scanner scan) {
 
 		String input;
@@ -50,10 +50,7 @@ public class main1 {
 
 		QueryImages query1=new QueryImages();
 
-		//File file=new File("images4/bmw1.jpg");
-		//MetaReader.reader(file);
-
-
+		
 		System.out.println("Type folder name/folder path: <folder>");
 
 		do {
@@ -64,8 +61,10 @@ public class main1 {
 
 		}while(!CheckFolder(input));
 
+		
 		MetaReader meta1=new MetaReader(input);
 		meta1.createxml();
+		
 
 		System.out.println(" ");
 		System.out.println("Type at least 1 keyword: <tag> ");
@@ -82,7 +81,7 @@ public class main1 {
 		option.add("2");
 		option.add("3");
 		option.add("exit");
-
+		
 		do {
 
 
@@ -96,7 +95,7 @@ public class main1 {
 				input=scan.nextLine();
 
 			}while(!option.contains(input));
-
+			
 			switch(input) {
 
 
@@ -145,18 +144,19 @@ public class main1 {
 				query1.DisplayImages();
 
 				break;
-
+				
 			case "exit":
+				
 				break;
 			}
 
-			if(!input.contains("exit")) {
-				System.out.println("Press any key to return to the main menu or <exit> to leave ");
-
+			if(!input.equals("exit")) {
+				System.out.println("Press ENTER to return to the main menu or <exit> to leave ");
+				System.out.print(">");
 				input=scan.nextLine();
 			}
 
-		}while(!input.contains("exit"));
+		}while(!input.equals("exit"));
 
 
 		scan.close();

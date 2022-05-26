@@ -34,7 +34,7 @@ public class MetaReader {
 	
 	
 	
-	public void createxml() {
+	public void createxml() { // function to create xml file using the images and keywords inside a folder
 
 		try {
 			String xmlFilePath = "Default-xml.xml";
