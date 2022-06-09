@@ -1,15 +1,10 @@
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,13 +19,11 @@ import org.xml.sax.SAXException;
 public class QueryImages implements Comparable<ArrayList<String>>  {
 
 	private ArrayList<String> UserTags= new ArrayList<String>(); //array to store the user tags
-	private ArrayList<String> OutputImages= new ArrayList<String>(); //images to store the result
-
-
+	
 
 
 	public boolean AddTags(String tag) {
-		
+
 		if(!UserTags.contains(tag.toLowerCase())) {
 			UserTags.add(tag.toLowerCase());
 			return true;
@@ -39,6 +32,17 @@ public class QueryImages implements Comparable<ArrayList<String>>  {
 		return false;
 
 	}
+
+	
+	public ArrayList<String> gettUserAr() {
+		return UserTags;
+	}
+
+	
+	public void setUserAr(ArrayList<String> Arr) {
+		UserTags=Arr;
+	}
+
 
 	public boolean deleteTags(String tag) {
 
@@ -58,50 +62,8 @@ public class QueryImages implements Comparable<ArrayList<String>>  {
 	}
 
 
-	
 
-
-	public void DisplayImages() { //function to display the images
-
-		if(OutputImages.isEmpty()) {
-			System.out.println("No matching Images !!");
-		}else {
-
-
-			for(String im:OutputImages) {
-
-				File file = new File(im);
-				BufferedImage bufferedImage;
-				try {
-
-					bufferedImage = ImageIO.read(file);
-					Image image = bufferedImage.getScaledInstance(800, 600, Image.SCALE_DEFAULT);
-					ImageIcon imageIcon = new ImageIcon(image);
-					JFrame jFrame = new JFrame();
-
-					jFrame.setLayout(new FlowLayout());
-
-					jFrame.setSize(800, 600);
-					JLabel jLabel = new JLabel();
-
-					jLabel.setIcon(imageIcon);
-					jFrame.add(jLabel);
-					jFrame.setVisible(true);
-
-
-
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-
-			}
-		}
-	}
-
-
-
-	public void DisplayTags() {
+	public void DisplayUserTags() {
 		System.out.print("User tags: ");
 		for(String a:UserTags) {
 			System.out.format("[%s]",a);
@@ -113,7 +75,7 @@ public class QueryImages implements Comparable<ArrayList<String>>  {
 
 	public void Extractxml(String xml) { //function that read xml files and retrieve tags
 
-		OutputImages.clear();
+		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		try {
@@ -140,30 +102,20 @@ public class QueryImages implements Comparable<ArrayList<String>>  {
 				Node node = list.item(temp);
 
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
-
+					
+					
 					Element element = (Element) node;
 
 					String imagepath = element.getElementsByTagName("path").item(0).getTextContent();
 					String key = element.getElementsByTagName("keyword").item(0).getTextContent();
-
-				
-
-					if(!OutputImages.contains(imagepath)) {
-						String[] keys=key.split(";");
-						ArrayList<String> tags= new ArrayList<String>(); 
-						for(int j=0;j<keys.length;j++) {
-							tags.add(keys[j]);
-						}
-
-
-						if(compareTo(tags)==1) { //adding images that match the user tags to display them
-							if(!OutputImages.contains(imagepath))
-								OutputImages.add(imagepath);
-						}
+					
+					Images im1=new Images(imagepath,SplitImageTags(key));
+					
+					if(compareTo(im1.getImageT())==1) { //adding images that match the user tags to display them
+						im1.DisplayMedia();
+						
 					}
 				}
-
-
 
 			}
 
@@ -173,17 +125,34 @@ public class QueryImages implements Comparable<ArrayList<String>>  {
 		}
 	}
 
+	
+
 
 	@Override
+
 	public int compareTo(ArrayList<String> o) {
 		o=(ArrayList<String>) o.stream().map(String::toLowerCase).collect(Collectors.toList());
-		
+
 		if(o.containsAll(UserTags)) {
 			return 1;
 		}else
 			return 0;
 	}
 
+	
+	public ArrayList<String> SplitImageTags(String T) {
+		
+		String[] key=T.split(";");
+		ArrayList<String> keys= new ArrayList<String>(); 
+		for(int j=0;j<key.length;j++) {
+			keys.add(key[j]);
+		}
+		
+		return keys;
+		
+	}
+
+	
 
 
 }

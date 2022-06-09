@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class main1 {
+public class mainProject {
 
 
 	public static void printTags(QueryImages query1,Scanner scan) {
@@ -17,7 +17,7 @@ public class main1 {
 
 				if(!input.equals("exit")) {
 					query1.AddTags(input);
-					query1.DisplayTags();
+					query1.DisplayUserTags();
 				}
 
 			}while(!input.equals("exit"));
@@ -100,7 +100,7 @@ public class main1 {
 
 
 			case "1":
-				query1.DisplayTags();
+				query1.DisplayUserTags();
 				System.out.println("Type tag to add: <tag> ");
 				System.out.println("Type exit when you are done");
 				printTags(query1,scan);
@@ -109,7 +109,7 @@ public class main1 {
 
 			case "2":
 				System.out.println(" ");
-				query1.DisplayTags();
+				query1.DisplayUserTags();
 				System.out.println("Type tag to delete: <tag> ");
 				System.out.println("Type exit when you are done");
 
@@ -141,7 +141,7 @@ public class main1 {
 			case "3":
 				System.out.println(" ");
 				query1.Extractxml("Default-xml.xml");
-				query1.DisplayImages();
+				
 
 				break;
 				

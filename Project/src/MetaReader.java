@@ -31,8 +31,13 @@ public class MetaReader {
 		
 	}
 	
+	public void setFolder(File f) {
+		Folder=f;
+	}
 	
-	
+	public File getFolder(){
+		return Folder;
+	}
 	
 	public void createxml() { // function to create xml file using the images and keywords inside a folder
 
